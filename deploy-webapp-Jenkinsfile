@@ -1,0 +1,19 @@
+pipeline {
+    agent { 
+        label 'ststor01' 
+    }
+    stages {
+        stage('Deploy') {
+            steps {
+             git branch: "master",
+                url: "http://git.stratos.xfusioncorp.com/sarah/web.git"
+                sh "cp -r /var/www/html/workspace/deploy-job/* /var/www/html"
+            }
+        }
+        stage('Test') {
+            steps {
+                sh "curl http://stlb01:8091"
+            }
+        }
+    }
+}

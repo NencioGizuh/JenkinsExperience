@@ -1,0 +1,16 @@
+pipeline {
+    agent {
+        label 'stapp03'
+    }
+    stages {
+        stage('Build') {
+            steps {
+                git branch: "master",
+                    url: "http://git.stratos.xfusioncorp.com/sarah/web.git"
+                
+                sh "docker buildx build -t stregi01.stratos.xfusioncorp.com:5000/nginx:latest ."
+                sh "docker image push stregi01.stratos.xfusioncorp.com:5000/nginx:latest"
+            }
+        }
+    }
+}
